@@ -47,6 +47,21 @@
       }
     };
 
+    Hand.prototype.win = function() {
+      console.log('win');
+      return this.trigger('win', this);
+    };
+
+    Hand.prototype.lose = function() {
+      console.log('lose');
+      return this.trigger('lose', this);
+    };
+
+    Hand.prototype.tie = function() {
+      console.log('tie');
+      return this.trigger('tie', this);
+    };
+
     return Hand;
 
   })(Backbone.Collection);

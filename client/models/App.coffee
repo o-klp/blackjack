@@ -6,7 +6,7 @@ class window.App extends Backbone.Model
     @set 'playerHand', deck.dealPlayer()
     @set 'dealerHand', deck.dealDealer()
     @get('playerHand').on 'stand', => @calculateScores()
-    @get('playerHand').on 'bust', => @endGame()
+    @get('playerHand').on 'bust', => @endGame(@get('playerHand').scores())
 
   calculateScores: ->
   	# calculate player's score
@@ -28,31 +28,44 @@ class window.App extends Backbone.Model
 
 		# if 17+ and no ace
 	  else if dealerScore >= 17 and dealerScore.length isnt 2
-	  	@endGame()
+	  	@endGame(@get('playerHand').scores(), dealerScore)
 
 	  # if have an ace and not over, end game
   	else if dealerScore[1] > 17 and dealerScore[1] < 22
-	  		@endGame()
+	  		@endGame(@get('playerHand').scores(), dealerScore)
   		# all else, check lowest score
 		  else @checkDealerScore dealerScore[0]
 
-  endGame: ->
-  	# prevent clicks on hit or stand
-
+  endGame: (playerScore, dealerScore) ->
   	# calculate player's score
-  	playerScore = @get('playerHand').scores()
+  	if playerScore.length == 2
+	  	playerScore = playerScore[0]
   	
+  	console.log playerScore
   	# flip dealer's hand in not already revealed
   	@get('dealerHand').models[0].flip() if !@get('dealerHand').models[0].get('revealed')
 
   	# calc dealer score
-  	dealerScore = @get('dealerHand').scores()
+  	# dealerScore = @get('dealerHand') .scores()
+
+  	if dealerScore.length == 2
+  		dealerScore = dealerScore[0]
 
   	# decide winner
-  	if playerScore < 22 and playerScore > dealerScore or dealerScore > 21
-  		alert("You win with the score of #{playerScore}!")
+  	if dealerScore > 21
+  		@get('playerHand').win()
   	else if playerScore > 21
-  		alert("Bust! You went over - score of #{playerScore}")
-  	else if dealerScore > playerScore and dealerScore < 22
-  		alert("You lose! Dealer score of #{dealerScore} is greater than #{playerScore}")
+  			@get('playerHand').lose()
+			else if playerScore > dealerScore
+	  		@get('playerHand').win()
+			else if playerScore == dealerScore
+	  		@get('playerHand').tie()
+	  	else if playerScore < dealerScore
+	  		@get('playerHand').lose()
 
+	# if playerScore < 22 and playerScore > dealerScore or dealerScore > 21
+ #  		alert("You win with the score of #{playerScore}!")
+ #  	else if playerScore > 21
+ #  		alert("Bust! You went over - score of #{playerScore}")
+ #  	else if dealerScore > playerScore and dealerScore < 22
+ #  		alert("You lose! Dealer score of #{dealerScore} is greater than #{playerScore}")

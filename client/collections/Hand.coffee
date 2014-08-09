@@ -29,3 +29,15 @@ class window.Hand extends Backbone.Collection
     if @scores()[0] > 21
       #if so trigger bust (app will listen and then score)
       @trigger 'bust', @
+
+  win: ->
+    console.log 'win'
+    @trigger 'win', @
+
+  lose: ->
+    console.log 'lose'
+    @trigger 'lose', @
+
+  tie: ->
+    console.log 'tie'
+    @trigger 'tie', @
