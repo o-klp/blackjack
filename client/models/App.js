@@ -30,9 +30,15 @@ window.App = (function(_super) {
   };
 
   App.prototype.checkDealerScore = function(dealerScore) {
-    if (dealerScore < 17) {
+    if (dealerScore < 17 && dealerScore.length !== 2) {
       this.get('dealerHand').hit();
       return this.checkDealerScore(this.get('dealerHand').scores());
+    } else {
+      if (dealerScore[1] > 17 && dealerScore[1] < 22) {
+        return this.checkDealerScore(dealerScore[1]);
+      } else {
+        return this.checkDealerScore(dealerScore[0]);
+      }
     }
   };
 

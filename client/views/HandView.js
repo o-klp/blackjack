@@ -30,7 +30,11 @@ window.HandView = (function(_super) {
         model: card
       }).$el;
     }));
-    return this.$('.score').text(this.collection.scores()[0]);
+    if (this.collection.scores()[1] < 22) {
+      return this.$('.score').text(this.collection.scores()[1]);
+    } else {
+      return this.$('.score').text(this.collection.scores()[0]);
+    }
   };
 
   return HandView;

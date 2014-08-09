@@ -17,11 +17,17 @@ class window.App extends Backbone.Model
   	# decide to hit or not
   	dealerScore = @get('dealerHand').scores()
   	@checkDealerScore dealerScore
+  	# console.log dealerScore
   	# dealerScore = @get('dealerHand').hit() if dealerScore < 17
   	# console.log playerScore, dealerScore, @get('dealerHand').models.map(card) ->
   	 	# card.get('revealed')
 
   checkDealerScore: (dealerScore) ->
-  	if dealerScore < 17
+  	if dealerScore < 17 and dealerScore.length isnt 2
 	  	@get('dealerHand').hit()
 	  	@checkDealerScore @get('dealerHand').scores()
+	  else
+	  	if dealerScore[1] > 17 and dealerScore[1] < 22
+	  		@checkDealerScore dealerScore[1] 
+		  else
+		  	@checkDealerScore dealerScore[0]
