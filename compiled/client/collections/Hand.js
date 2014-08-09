@@ -18,7 +18,8 @@
     };
 
     Hand.prototype.hit = function() {
-      return this.add(this.deck.pop()).last();
+      this.add(this.deck.pop()).last();
+      return this.checkBust();
     };
 
     Hand.prototype.scores = function() {
@@ -38,6 +39,12 @@
 
     Hand.prototype.stand = function() {
       return this.trigger('stand', this);
+    };
+
+    Hand.prototype.checkBust = function() {
+      if (this.scores()[0] > 21) {
+        return this.trigger('bust', this);
+      }
     };
 
     return Hand;

@@ -6,6 +6,7 @@ class window.Hand extends Backbone.Collection
 
   hit: ->
     @add(@deck.pop()).last()
+    @checkBust()
 
   scores: ->
     # The scores are an array of potential scores.
@@ -23,3 +24,8 @@ class window.Hand extends Backbone.Collection
     # trigger stand event (app will listen)
     @trigger 'stand', @
       
+  checkBust: ->
+    # check if score is over
+    if @scores()[0] > 21
+      #if so trigger bust (app will listen and then score)
+      @trigger 'bust', @
