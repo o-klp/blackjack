@@ -12,6 +12,8 @@ class window.AppView extends Backbone.View
 
   initialize: ->
     @render()
+    @model.on 'player:win', => alert "You won!"
+    @model.on 'dealer:win', => alert "You lost!"
 
   render: ->
     @$el.children().detach()

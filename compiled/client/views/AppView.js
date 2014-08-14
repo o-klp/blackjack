@@ -22,7 +22,17 @@
     };
 
     AppView.prototype.initialize = function() {
-      return this.render();
+      this.render();
+      this.model.on('player:win', (function(_this) {
+        return function() {
+          return alert("You won!");
+        };
+      })(this));
+      return this.model.on('dealer:win', (function(_this) {
+        return function() {
+          return alert("You lost!");
+        };
+      })(this));
     };
 
     AppView.prototype.render = function() {

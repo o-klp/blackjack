@@ -19,7 +19,9 @@
 
     Hand.prototype.hit = function() {
       this.add(this.deck.pop()).last();
-      return this.checkBust();
+      if (this.busted()) {
+        return this.trigger('bust', this);
+      }
     };
 
     Hand.prototype.scores = function() {
@@ -37,29 +39,36 @@
       }
     };
 
-    Hand.prototype.stand = function() {
-      return this.trigger('stand', this);
+    Hand.prototype.busted = function() {
+      return this.maxScores() > 21;
     };
 
-    Hand.prototype.checkBust = function() {
-      if (this.scores()[0] > 21) {
-        return this.trigger('bust', this);
+    Hand.prototype.maxScores = function() {
+      var scores;
+      scores = this.scores();
+      if (scores.length > 1) {
+        if (scores[1] < 22) {
+          return scores[1];
+        } else {
+          return scores[0];
+        }
+      } else {
+        return scores[0];
       }
     };
 
-    Hand.prototype.win = function() {
-      console.log('win');
-      return this.trigger('win', this);
+    Hand.prototype.playTo17 = function() {
+      this.models[0].flip();
+      while (this.maxScores() < 17) {
+        this.hit();
+      }
+      if (!this.busted()) {
+        return this.stand();
+      }
     };
 
-    Hand.prototype.lose = function() {
-      console.log('lose');
-      return this.trigger('lose', this);
-    };
-
-    Hand.prototype.tie = function() {
-      console.log('tie');
-      return this.trigger('tie', this);
+    Hand.prototype.stand = function() {
+      return this.trigger('stand', this);
     };
 
     return Hand;
