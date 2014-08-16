@@ -4,7 +4,7 @@
 
   assert = chai.assert;
 
-  describe('deck', function() {
+  describe('deck constructor', function() {
     var deck, hand;
     deck = null;
     hand = null;
@@ -12,13 +12,23 @@
       deck = new Deck();
       return hand = deck.dealPlayer();
     });
-    return describe('hit', function() {
-      return it("should give the last card from the deck", function() {
-        assert.strictEqual(deck.length, 50);
-        assert.strictEqual(deck.last(), hand.hit());
-        assert.strictEqual(deck.length, 49);
-        hand.playable && (assert.strictEqual(deck.last(), hand.hit()));
-        return hand.playable && (assert.strictEqual(deck.length, 48));
+    return describe('deck', function() {
+      it("should create a card collection", function() {
+        var collection;
+        collection = new Deck();
+        return assert.strictEqual(collection.length, 52);
+      });
+      it("should deal from the deck", function() {
+        var collection, playerHand;
+        collection = new Deck();
+        playerHand = collection.dealPlayer();
+        return assert.strictEqual(collection.length, 50);
+      });
+      return it("should hide the first card after dealing the dealer's hand", function() {
+        var collection, dealerHand;
+        collection = new Deck();
+        dealerHand = collection.dealDealer();
+        return assert.strictEqual(dealerHand.models[0].get('revealed'), false);
       });
     });
   });

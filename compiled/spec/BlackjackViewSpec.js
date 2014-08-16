@@ -4,19 +4,23 @@
 
   assert = chai.assert;
 
-  describe('deck', function() {
-    var deck, hand;
+  describe('app', function() {
+    var dealerHand, deck, hand, playerHand;
     deck = null;
     hand = null;
+    dealerHand = null;
+    playerHand = null;
     beforeEach(function() {
-      var dealerHand, playerHand;
       deck = new Deck();
-      dealerHand = deck.dealPlayer();
+      dealerHand = deck.dealDealer();
       return playerHand = deck.dealPlayer();
     });
-    return it('should give a max score', function() {
-      console.log(deck, dealerHand, playerHand);
-      return assert.strictEqual(scores.length, 1);
+    return it("should play dealer\'s hand on a player stand event", function() {
+      var afterScore, beforeScore;
+      beforeScore = dealerHand.maxScores();
+      playerHand.trigger('stand');
+      afterScore = dealerHand.maxScores();
+      return assert.notEqual(beforeScore, afterScore);
     });
   });
 

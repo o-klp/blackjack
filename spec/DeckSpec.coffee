@@ -1,6 +1,6 @@
 assert = chai.assert
 
-describe 'deck', ->
+describe 'deck constructor', ->
   deck = null
   hand = null
 
@@ -8,10 +8,17 @@ describe 'deck', ->
     deck = new Deck()
     hand = deck.dealPlayer()
 
-  describe 'hit', ->
-    it "should give the last card from the deck", ->
-      assert.strictEqual deck.length, 50
-      assert.strictEqual deck.last(), hand.hit()
-      assert.strictEqual deck.length, 49
-      hand.playable && (assert.strictEqual deck.last(), hand.hit())
-      hand.playable && (assert.strictEqual deck.length, 48)
+  describe 'deck', ->
+    it "should create a card collection", ->
+      collection = new Deck()
+      assert.strictEqual collection.length, 52
+
+    it "should deal from the deck", ->
+      collection = new Deck()
+      playerHand = collection.dealPlayer()
+      assert.strictEqual collection.length, 50
+
+    it "should hide the first card after dealing the dealer's hand", ->
+      collection = new Deck()
+      dealerHand = collection.dealDealer()
+      assert.strictEqual dealerHand.models[0].get('revealed'), false
