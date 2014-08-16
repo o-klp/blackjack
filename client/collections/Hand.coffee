@@ -2,11 +2,15 @@ class window.Hand extends Backbone.Collection
 
   model: Card
 
+  playable: true
+
   initialize: (array, @deck, @isDealer) ->
 
   hit: ->
+    return if !@playable
     @add(@deck.pop()).last()
     if @busted()
+      @playable = false
       @trigger 'bust', @
 
   scores: ->
@@ -32,6 +36,7 @@ class window.Hand extends Backbone.Collection
       scores[0]
 
   playTo17: ->
+    return if !@playable
     @models[0].flip()
     while @maxScores() < 17
       @hit()
@@ -39,4 +44,6 @@ class window.Hand extends Backbone.Collection
       @stand()
 
   stand: ->
+    return if !@playable
+    @playable = false
     @trigger 'stand', @

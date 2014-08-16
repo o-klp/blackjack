@@ -45,15 +45,20 @@
       return this.trigger('dealer:win', this);
     };
 
+    App.prototype.tie = function() {
+      return this.trigger('tie', this);
+    };
+
     App.prototype.findWinner = function() {
       var dealerScore, playerScore;
       playerScore = this.get('playerHand').maxScores();
       dealerScore = this.get('dealerHand').maxScores();
-      console.log("player score is " + playerScore + " - dealerScore is " + dealerScore);
       if (dealerScore > playerScore) {
         return this.dealerWin();
-      } else {
+      } else if (playerScore > dealerScore) {
         return this.playerWin();
+      } else {
+        return this.tie();
       }
     };
 

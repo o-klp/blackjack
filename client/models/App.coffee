@@ -19,8 +19,11 @@ class window.App extends Backbone.Model
   dealerWin: ->
     @trigger 'dealer:win', @
 
+  tie: ->
+    @trigger 'tie', @
+
   findWinner: ->
     playerScore = @get('playerHand').maxScores()
     dealerScore = @get('dealerHand').maxScores()
-    console.log "player score is #{playerScore} - dealerScore is #{dealerScore}"
-    if dealerScore > playerScore then @dealerWin() else @playerWin()
+    if dealerScore > playerScore then @dealerWin() else if playerScore > dealerScore
+    then @playerWin() else @tie()

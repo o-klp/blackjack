@@ -31,11 +31,7 @@
           model: card
         }).$el;
       }));
-      if (this.collection.scores()[1] < 22) {
-        return this.$('.score').text(this.collection.scores()[1]);
-      } else {
-        return this.$('.score').text(this.collection.scores()[0]);
-      }
+      return this.$('.score').text(this.collection.maxScores());
     };
 
     return HandView;

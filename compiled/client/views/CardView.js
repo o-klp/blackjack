@@ -12,7 +12,7 @@
 
     CardView.prototype.className = 'card';
 
-    CardView.prototype.template = _.template('<%= rankName %> of <%= suitName %>');
+    CardView.prototype.template = _.template('<img src="../2014-07-blackjack/img/cards/<%= rankName %>-<%= suitName %>.png" height="139px"/>');
 
     CardView.prototype.initialize = function() {
       this.model.on('change', (function(_this) {

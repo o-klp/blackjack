@@ -28,9 +28,14 @@
           return alert("You won!");
         };
       })(this));
-      return this.model.on('dealer:win', (function(_this) {
+      this.model.on('dealer:win', (function(_this) {
         return function() {
           return alert("You lost!");
+        };
+      })(this));
+      return this.model.on('tie', (function(_this) {
+        return function() {
+          return alert("Tie!");
         };
       })(this));
     };

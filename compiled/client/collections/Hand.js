@@ -12,14 +12,20 @@
 
     Hand.prototype.model = Card;
 
+    Hand.prototype.playable = true;
+
     Hand.prototype.initialize = function(array, deck, isDealer) {
       this.deck = deck;
       this.isDealer = isDealer;
     };
 
     Hand.prototype.hit = function() {
+      if (!this.playable) {
+        return;
+      }
       this.add(this.deck.pop()).last();
       if (this.busted()) {
+        this.playable = false;
         return this.trigger('bust', this);
       }
     };
@@ -58,6 +64,9 @@
     };
 
     Hand.prototype.playTo17 = function() {
+      if (!this.playable) {
+        return;
+      }
       this.models[0].flip();
       while (this.maxScores() < 17) {
         this.hit();
@@ -68,6 +77,10 @@
     };
 
     Hand.prototype.stand = function() {
+      if (!this.playable) {
+        return;
+      }
+      this.playable = false;
       return this.trigger('stand', this);
     };
 
