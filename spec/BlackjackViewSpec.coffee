@@ -10,6 +10,6 @@ describe 'deck', ->
     playerHand = deck.dealPlayer()
 
   it 'should give a max score', ->
-    console.log dealerHand
-    scores = deck.get('dealerHand').maxScore()
+    # scores = 
+    console.log deck, dealerHand, playerHand
     assert.strictEqual scores.length, 1

@@ -25,19 +25,31 @@
       this.render();
       this.model.on('player:win', (function(_this) {
         return function() {
-          return alert("You won!");
+          return setTimeout(_this.win, 500);
         };
       })(this));
       this.model.on('dealer:win', (function(_this) {
         return function() {
-          return alert("You lost!");
+          return setTimeout(_this.lose, 500);
         };
       })(this));
       return this.model.on('tie', (function(_this) {
         return function() {
-          return alert("Tie!");
+          return setTimeout(_this.tie, 500);
         };
       })(this));
+    };
+
+    AppView.prototype.win = function() {
+      return alert("You won!");
+    };
+
+    AppView.prototype.lose = function() {
+      return alert("You lost!");
+    };
+
+    AppView.prototype.tie = function() {
+      return alert("Tie!");
     };
 
     AppView.prototype.render = function() {

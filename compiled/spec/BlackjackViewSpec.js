@@ -15,9 +15,7 @@
       return playerHand = deck.dealPlayer();
     });
     return it('should give a max score', function() {
-      var scores;
-      console.log(dealerHand);
-      scores = deck.get('dealerHand').maxScore();
+      console.log(deck, dealerHand, playerHand);
       return assert.strictEqual(scores.length, 1);
     });
   });

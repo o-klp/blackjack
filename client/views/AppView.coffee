@@ -12,9 +12,18 @@ class window.AppView extends Backbone.View
 
   initialize: ->
     @render()
-    @model.on 'player:win', => alert "You won!"
-    @model.on 'dealer:win', => alert "You lost!"
-    @model.on 'tie', => alert "Tie!"
+    @model.on 'player:win', => setTimeout @win, 500
+    @model.on 'dealer:win', => setTimeout @lose, 500
+    @model.on 'tie', => setTimeout @tie, 500
+
+  win: ->
+    alert "You won!"
+
+  lose: ->
+    alert "You lost!"
+
+  tie: ->
+    alert "Tie!"
 
   render: ->
     @$el.children().detach()
